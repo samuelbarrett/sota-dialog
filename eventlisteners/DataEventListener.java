@@ -1,11 +1,11 @@
 
-package eventhandlers;
+package eventlisteners;
 import events.Event;
 
-public class DataEventHandler implements EventHandler {
+public class DataEventListener extends EventListener {
  
     @Override
-    public void handle(Event e) {
+    public void handleEvent(Event e) {
         System.out.println("data input event");
         // try {
         //     Thread.sleep(500);
