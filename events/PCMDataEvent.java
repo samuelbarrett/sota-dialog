@@ -1,8 +1,6 @@
 package events;
-public class PCMDataEvent implements Event {
-    private short[] data;
-
-    public PCMDataEvent(short[] data) {
+public class PCMDataEvent extends Event {
+    public PCMDataEvent(double[] data) {
         this.data = data;    
     }
 }

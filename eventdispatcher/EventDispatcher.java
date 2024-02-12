@@ -41,7 +41,7 @@ public class EventDispatcher implements DataProcessor {
     }
 
     @Override
-    public void process(short[] data) {
+    public void process(double[] data) {
         scheduleEvent(new PCMDataEvent(data));
     }
 }

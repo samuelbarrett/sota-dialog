@@ -1,8 +1,6 @@
 package events;
 
-public class RMSEvent implements Event {
-    private double[] data;
-
+public class RMSEvent extends Event {
     public RMSEvent(double[] data) {
         this.data = data;    
     }

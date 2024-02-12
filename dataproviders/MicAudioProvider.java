@@ -33,15 +33,16 @@ public class MicAudioProvider extends DataProvider {
             dataline.start();
     
             byte[] buffer = new byte[this.bufferSize];
-            short[] samples = new short[this.bufferSize / 2];
+            double[] samples = new double[this.bufferSize / 2];
 
-            ShortBuffer shortBuffer = ByteBuffer.wrap(buffer).asShortBuffer();
+            ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
 
             while(audioStream.read(buffer) >= 0) {
                 System.out.println("new audio");
-                shortBuffer.position(0);
-                shortBuffer.get(samples);
-            
+                byteBuffer.position(0);
+                for(int i = 0; i < this.bufferSize/2; i++) {
+                   samples[i] = (double)byteBuffer.getShort();
+                }
                 processor.process(samples);
             }
         } catch (Exception e) {

@@ -1,3 +1,2 @@
 package events;
-
-public class LogEvent implements Event {}
+public class LogEvent extends Event {}
