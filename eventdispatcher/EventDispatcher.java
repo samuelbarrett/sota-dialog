@@ -18,6 +18,7 @@ public class EventDispatcher implements DataProcessor {
 
     public void registerEventListener(Class<? extends Event> eventType, EventListener listener) {
         listenerMap.computeIfAbsent(eventType, k -> new ArrayList<EventListener>()).add(listener);
+        listener.setDispatcher(this);
     }
 
     public void scheduleEvent(Event event) {
