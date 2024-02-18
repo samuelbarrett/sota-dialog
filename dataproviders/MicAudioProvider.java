@@ -1,6 +1,5 @@
 package dataproviders;
 import java.nio.ByteBuffer;
-import java.nio.ShortBuffer;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -8,17 +7,16 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.TargetDataLine;
 
-import eventdispatcher.DataProcessor;
+import eventsystem.EventDispatcher;
 
 public class MicAudioProvider extends DataProvider {
-    private DataProcessor processor;
     private int sampleRate;
     private int bufferSize;
 
-    public MicAudioProvider(int sampleRate, int bufferSize, DataProcessor processor) {
+    public MicAudioProvider(EventDispatcher dispatcher, int sampleRate, int bufferSize) {
+        super(dispatcher);
         this.sampleRate = sampleRate;
         this.bufferSize = bufferSize;
-        this.processor = processor;
     } 
 
     @Override
@@ -43,7 +41,7 @@ public class MicAudioProvider extends DataProvider {
                 for(int i = 0; i < this.bufferSize/2; i++) {
                    samples[i] = (double)byteBuffer.getShort();
                 }
-                processor.process(samples);
+                this.notifyListeners(samples);
             }
         } catch (Exception e) {
             e.printStackTrace();
