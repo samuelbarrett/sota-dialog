@@ -1,36 +1,45 @@
-// package dataproviders;
+package dataproviders;
 
-// import java.io.File;
-// import javax.sound.sampled.AudioInputStream;
-// import javax.sound.sampled.AudioSystem;
+import java.io.File;
+import java.nio.ByteBuffer;
 
-// import eventdispatcher.DataProcessor;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 
+import eventsystem.EventDispatcher;
 
-// public class FileAudioProvider extends DataProvider   {
-//     private DataProcessor processor;
-//     private File audioFile;
-//     private int bufferSize;
+public class FileAudioProvider extends DataProvider   {
+   
+    private File audioFile;
+    private int bufferSize;
 
-//     public FileAudioProvider(File audioFile, int bufferSize, DataProcessor processor) {
-//         this.audioFile = audioFile;
-//         this.bufferSize = bufferSize;
-//         this.processor = processor;
-//     } 
+    public FileAudioProvider(EventDispatcher dispatcher, File audioFile, int bufferSize) {
+        super(dispatcher);
+        this.audioFile = audioFile;
+        this.bufferSize = bufferSize;
+    } 
 
-//     @Override
-//     public void run() {
-//         try {
+    @Override
+    public void run() {
+        try {
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(this.audioFile);
 
-//             byte[] buffer = new byte[this.bufferSize];
-//             AudioInputStream audioStream = AudioSystem.getAudioInputStream(this.audioFile);
+            byte[] buffer = new byte[this.bufferSize];
+            double[] samples = new double[this.bufferSize / 2];
 
-//             while(audioStream.read(buffer) >=0) {
-//                 processor.process(null);
-//             }
+            ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
+
+            while(audioStream.read(buffer) >= 0) {
+                System.out.println("new audio");
+                byteBuffer.position(0);
+                for(int i = 0; i < this.bufferSize/2; i++) {
+                   samples[i] = (double)byteBuffer.getShort();
+                }
+                this.notifyListeners(samples);
+            }
             
-//         } catch (Exception e) {
-//             e.printStackTrace();
-//         }
-//     }
-// }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
