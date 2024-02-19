@@ -6,15 +6,12 @@ import java.nio.ByteBuffer;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
-import eventsystem.EventDispatcher;
-
 public class FileAudioProvider extends DataProvider   {
    
     private File audioFile;
     private int bufferSize;
 
-    public FileAudioProvider(EventDispatcher dispatcher, File audioFile, int bufferSize) {
-        super(dispatcher);
+    public FileAudioProvider(File audioFile, int bufferSize) {
         this.audioFile = audioFile;
         this.bufferSize = bufferSize;
     } 
@@ -36,8 +33,7 @@ public class FileAudioProvider extends DataProvider   {
                    samples[i] = (double)byteBuffer.getShort();
                 }
                 this.notifyListeners(samples);
-            }
-            
+            }      
         } catch (Exception e) {
             e.printStackTrace();
         }

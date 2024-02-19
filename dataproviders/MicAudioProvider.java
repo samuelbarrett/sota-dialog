@@ -7,14 +7,11 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.TargetDataLine;
 
-import eventsystem.EventDispatcher;
-
 public class MicAudioProvider extends DataProvider {
     private int sampleRate;
     private int bufferSize;
 
-    public MicAudioProvider(EventDispatcher dispatcher, int sampleRate, int bufferSize) {
-        super(dispatcher);
+    public MicAudioProvider(int sampleRate, int bufferSize) {
         this.sampleRate = sampleRate;
         this.bufferSize = bufferSize;
     } 

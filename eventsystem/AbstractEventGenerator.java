@@ -5,11 +5,11 @@ import java.util.List;
 
 public abstract class AbstractEventGenerator implements EventGenerator {
 
-    private EventDispatcher dispatcher;
+    private static EventDispatcher dispatcher;
     private List<EventListener> listeners = new ArrayList<EventListener>();
 
-    public AbstractEventGenerator(EventDispatcher dispatcher) {
-        this.dispatcher = dispatcher;
+    public static void setDispatcher(EventDispatcher dispatcher) {
+        AbstractEventGenerator.dispatcher = dispatcher;
     }
 
     @Override
@@ -23,4 +23,6 @@ public abstract class AbstractEventGenerator implements EventGenerator {
     public void addListener(EventListener l) {
         this.listeners.add(l);
     }
+
+
 }
