@@ -14,7 +14,7 @@ public class EventDispatcher {
     public void run() {         
         try {
             while(true) {
-                eventQueue.take().getListener().handle();
+                eventQueue.take().handle();
             }
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();

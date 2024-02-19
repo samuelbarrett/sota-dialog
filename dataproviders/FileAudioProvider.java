@@ -6,6 +6,8 @@ import java.nio.ByteBuffer;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
+import datatypes.DoubleData;
+
 public class FileAudioProvider extends DataProvider   {
    
     private File audioFile;
@@ -27,12 +29,11 @@ public class FileAudioProvider extends DataProvider   {
             ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
 
             while(audioStream.read(buffer) >= 0) {
-                System.out.println("new audio");
                 byteBuffer.position(0);
                 for(int i = 0; i < this.bufferSize/2; i++) {
                    samples[i] = (double)byteBuffer.getShort();
                 }
-                this.notifyListeners(samples);
+                this.notifyListeners(new DoubleData(samples));
             }      
         } catch (Exception e) {
             e.printStackTrace();

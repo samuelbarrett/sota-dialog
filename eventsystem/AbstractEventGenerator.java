@@ -3,6 +3,8 @@ package eventsystem;
 import java.util.ArrayList;
 import java.util.List;
 
+import datatypes.Data;
+
 public abstract class AbstractEventGenerator implements EventGenerator {
 
     private static EventDispatcher dispatcher;
@@ -13,9 +15,9 @@ public abstract class AbstractEventGenerator implements EventGenerator {
     }
 
     @Override
-    public void notifyListeners(double[] data) {
+    public void notifyListeners(Data d) {
         for(EventListener l : this.listeners) {
-            dispatcher.scheduleEvent(new Event(data, l));
+            dispatcher.scheduleEvent(new Event(d, l));
         }
     }
 

@@ -1,20 +1,18 @@
 package eventsystem;
 
+import datatypes.Data;
+
 public class Event {
     
-    private double[] data; //change to custom data type
+    private Data data; 
     private EventListener listener;
 
-    public Event(double[] data, EventListener l) {
-        this.data = data;
+    public Event(Data d, EventListener l) {
+        this.data = d;
         this.listener = l;
     }
 
-    public double[] getData() {
-        return this.data;
-    }
-
-    public EventListener getListener() {
-        return this.listener;
+    public void handle() {
+        this.listener.handle(this.data);
     }
 }
