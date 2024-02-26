@@ -1,6 +1,7 @@
 import java.io.File;
 
 import dataprocessors.Logger;
+import dataprocessors.Plotter;
 import dataprocessors.RMS;
 import dataproviders.DataProvider;
 import dataproviders.FileAudioProvider;
@@ -15,13 +16,13 @@ public class Main {
         AbstractEventGenerator.setDispatcher(dispatcher);
        
         DataProvider provider = new MicAudioProvider(22050, 1024);
-        //DataProvider provider = new FileAudioProvider(dispatcher, new File("test.wav"), 1024);
+        //provider.addListener(new Plotter("Audio Samples", 0, 50000));
 
         RMS rms = new RMS();
-        Logger logger = new Logger();
-
         provider.addListener(rms);
-        rms.addListener(logger);
+        
+        Plotter rmsPlotter = new Plotter("RMS", 0, 1000);
+        rms.addListener(rmsPlotter);
 
         provider.start();
         dispatcher.run();
