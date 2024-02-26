@@ -3,7 +3,7 @@ package datatypes;
 import java.util.Arrays;
 
 public class DoubleData implements Data {
-    public double[] data;
+    public final double[] data;
 
     public DoubleData(double[] data) {
         this.data = data;
