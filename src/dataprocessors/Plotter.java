@@ -5,9 +5,7 @@ import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
 
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -17,16 +15,12 @@ import datatypes.DoubleData;
 
 public class Plotter extends DataProcessor {
 
-    private XYSeries series;
+    private XYSeries series = new XYSeries("series");;
 
-    private NumberAxis domain;
-    int maxX;
-    int xValue = 0;
+    private int xValue = 0;
+    private int maxX;
 
     public Plotter(String title, int minX, int maxX) {
-        this.series = new XYSeries("series");
-        series.setMaximumItemCount(maxX);
-
         XYSeriesCollection dataset = new XYSeriesCollection(series);
         JFreeChart chart = ChartFactory.createXYLineChart(
                 title, 
@@ -40,9 +34,6 @@ public class Plotter extends DataProcessor {
         );
 
         this.maxX = maxX;
-        XYPlot plot = chart.getXYPlot();
-        this.domain = (NumberAxis) plot.getDomainAxis();
-        this.domain.setRange(minX, maxX);
 
         //create frame
         ChartPanel panel = new ChartPanel(chart);
@@ -60,13 +51,16 @@ public class Plotter extends DataProcessor {
         double[] data = doubleInput.data;
 
         for(double d : data) {
-            series.add(xValue, d);
+            series.add(xValue, d, false);
             xValue++;
         }
 
-        if(series.getItemCount() >= maxX) {
-            this.domain.setRange(xValue-maxX, xValue); 
-        }
+        int remove = series.getItemCount() - this.maxX;
+        if(remove > 0) {
+            series.delete(0, remove);
+        } 
+        series.fireSeriesChanged();
+
         return null;
-    }
+    }    
 }
