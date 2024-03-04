@@ -4,6 +4,7 @@ import dataprocessors.CSVWriter;
 import dataprocessors.Convolve;
 import dataprocessors.Log10;
 import dataprocessors.RMS;
+import dataprocessors.SilenceDetector;
 import dataprocessors.GaussianSmooth;
 import dataproviders.DataProvider;
 
@@ -32,11 +33,13 @@ public class Main {
         Convolve c = new Convolve(new double[]{-1, -1, 1, 1});
         s.addListener(c);
 
-        provider.addListener(new CSVWriter("./samples.csv"));
-        rms.addListener(new CSVWriter("./rms.csv"));
-        log.addListener(new CSVWriter("./log.csv"));
-        s.addListener(new CSVWriter("./smoothed.csv"));
-        c.addListener(new CSVWriter("./derivative.csv"));
+        c.addListener(new SilenceDetector());
+
+        // provider.addListener(new CSVWriter("./samples.csv"));
+        // rms.addListener(new CSVWriter("./rms.csv"));
+        // log.addListener(new CSVWriter("./log.csv"));
+        // s.addListener(new CSVWriter("./smoothed.csv"));
+        // c.addListener(new CSVWriter("./derivative.csv"));
 
         provider.start();
         dispatcher.run();
