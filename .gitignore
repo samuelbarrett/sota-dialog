@@ -26,5 +26,8 @@ replay_pid*
 # audio files
 *.wav
 
+# csv files
+*.csv
+
 #vscode config
 .vscode/
