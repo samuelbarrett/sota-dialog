@@ -6,7 +6,7 @@ import datatypes.DoubleData;
 public class RMS extends DataProcessor {
 
     private double[] buffer;
-    private int index = 0;
+    private int bufferIndex = 0;
 
     public RMS(int windowSize) {
         this.buffer = new double[windowSize];
@@ -14,16 +14,14 @@ public class RMS extends DataProcessor {
     
     @Override
     protected Data process(Data input) {
-        //TODO handle ClassCastException
         DoubleData doubleInput = (DoubleData)input; 
         double[] data = doubleInput.data;
-
         double[] output = new double[data.length];
 
         for(int i = 0; i < data.length; i++) {
-            buffer[index] = data[i];
+            buffer[bufferIndex] = data[i];
             output[i] = rms();
-            index = (index + 1) % buffer.length;
+            bufferIndex = (bufferIndex + 1) % buffer.length;
         }
 
         return new DoubleData(output);
