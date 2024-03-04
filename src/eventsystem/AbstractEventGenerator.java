@@ -27,6 +27,4 @@ public abstract class AbstractEventGenerator implements EventGenerator {
     public void addListener(EventListener l) {
         this.listeners.add(l);
     }
-
-
 }
