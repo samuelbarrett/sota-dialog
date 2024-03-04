@@ -16,8 +16,10 @@ public abstract class AbstractEventGenerator implements EventGenerator {
 
     @Override
     public void notifyListeners(Data d) {
-        for(EventListener l : this.listeners) {
-            dispatcher.scheduleEvent(new Event(d, l));
+        if(d != null) {
+            for(EventListener l : this.listeners) {
+                dispatcher.scheduleEvent(new Event(d, l));
+            }
         }
     }
 
