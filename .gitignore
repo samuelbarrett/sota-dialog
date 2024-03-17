@@ -31,3 +31,7 @@ replay_pid*
 
 #vscode config
 .vscode/
+
+# sota build
+build.xml
+rt.jar
