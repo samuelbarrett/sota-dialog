@@ -2,6 +2,7 @@ package dataprocessors;
 
 import datatypes.Data;
 import datatypes.DoubleData;
+import eventsystem.EventGenerator;
 
 public class Convolve extends DataProcessor {
 
@@ -16,7 +17,8 @@ public class Convolve extends DataProcessor {
     }
 
     @Override
-    protected Data process(Data input) {
+    protected Data process(Data input, EventGenerator sender) {
+        System.out.println(sender.getClass());
         DoubleData doubleInput = (DoubleData)input; 
         double[] data = doubleInput.data;
         

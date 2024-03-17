@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 
 import datatypes.Data;
 import datatypes.DoubleData;
+import eventsystem.EventGenerator;
 
 public class CSVWriter extends DataProcessor {
 
@@ -24,10 +25,10 @@ public class CSVWriter extends DataProcessor {
     }
 
     @Override
-    protected Data process(Data input) {
+    protected Data process(Data input, EventGenerator sender) {
         DoubleData doubleInput = (DoubleData)input; 
         double[] data = doubleInput.data;
-
+        
         try {
             initWriter();
             for(double d : data) {
@@ -36,7 +37,7 @@ public class CSVWriter extends DataProcessor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         return null;
     }
     

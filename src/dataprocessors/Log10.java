@@ -2,11 +2,12 @@ package dataprocessors;
 
 import datatypes.Data;
 import datatypes.DoubleData;
+import eventsystem.EventGenerator;
 
 public class Log10 extends DataProcessor {
 
     @Override
-    protected Data process(Data input) {
+    protected Data process(Data input, EventGenerator sender) {
         DoubleData doubleInput = (DoubleData)input; 
         double[] data = doubleInput.data;
         double[] output = new double[data.length];

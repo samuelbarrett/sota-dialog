@@ -1,7 +1,10 @@
 package dataprocessors;
 
+import org.jfree.chart.plot.SeriesRenderingOrder;
+
 import datatypes.Data;
 import datatypes.DoubleData;
+import eventsystem.EventGenerator;
 
 public class RMS extends DataProcessor {
 
@@ -13,7 +16,9 @@ public class RMS extends DataProcessor {
     }
     
     @Override
-    protected Data process(Data input) {
+    protected Data process(Data input, EventGenerator sender) {
+        System.out.println(sender.getClass());
+
         DoubleData doubleInput = (DoubleData)input; 
         double[] data = doubleInput.data;
         double[] output = new double[data.length];

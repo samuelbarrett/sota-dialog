@@ -3,8 +3,9 @@ import java.io.File;
 import dataprocessors.CSVWriter;
 import dataprocessors.Convolve;
 import dataprocessors.Log10;
+import dataprocessors.Plotter;
 import dataprocessors.RMS;
-import dataprocessors.SilenceDetector;
+import dataprocessors.SilenceDetectorTest;
 import dataprocessors.GaussianSmooth;
 import dataproviders.DataProvider;
 
@@ -33,13 +34,17 @@ public class Main {
         Convolve c = new Convolve(new double[]{-1, -1, 1, 1});
         s.addListener(c);
 
-        c.addListener(new SilenceDetector());
+        c.addListener(new SilenceDetectorTest());
 
         // provider.addListener(new CSVWriter("./samples.csv"));
         // rms.addListener(new CSVWriter("./rms.csv"));
         // log.addListener(new CSVWriter("./log.csv"));
         // s.addListener(new CSVWriter("./smoothed.csv"));
         // c.addListener(new CSVWriter("./derivative.csv"));
+
+        //provider.addListener(new Plotter("samples", 0, 25000, -32000, 32000));
+        //s.addListener(new Plotter("smoothed rms", 0, 25000, 0, 8.0));
+        c.addListener(new Plotter("derivative", 0, 25000, -0.006, 0.006));
 
         provider.start();
         dispatcher.run();

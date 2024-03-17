@@ -6,21 +6,21 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import datatypes.Data;
 import datatypes.DoubleData;
+import eventsystem.EventGenerator;
 
 public class Plotter extends DataProcessor {
-
     private XYSeries series = new XYSeries("series");;
 
     private int xValue = 0;
-    private int maxX;
+    private double maxX;
 
-    public Plotter(String title, int minX, int maxX) {
+    public Plotter(String title, double minX, double maxX, double minY, double maxY) {
         XYSeriesCollection dataset = new XYSeriesCollection(series);
         JFreeChart chart = ChartFactory.createXYLineChart(
                 title, 
@@ -35,6 +35,9 @@ public class Plotter extends DataProcessor {
 
         this.maxX = maxX;
 
+        XYPlot plot = chart.getXYPlot();
+        plot.getRangeAxis().setRange(minY, maxY);
+
         //create frame
         ChartPanel panel = new ChartPanel(chart);
         JFrame frame = new JFrame();
@@ -45,8 +48,7 @@ public class Plotter extends DataProcessor {
     }
 
     @Override
-    protected Data process(Data input) {    
-        //TODO handle ClassCastException
+    protected Data process(Data input, EventGenerator sender) {    
         DoubleData doubleInput = (DoubleData)input; 
         double[] data = doubleInput.data;
 
@@ -55,7 +57,7 @@ public class Plotter extends DataProcessor {
             xValue++;
         }
 
-        int remove = series.getItemCount() - this.maxX;
+        int remove = (int)(series.getItemCount() - this.maxX);
         if(remove > 0) {
             series.delete(0, remove);
         } 
