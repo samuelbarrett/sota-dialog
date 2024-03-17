@@ -15,6 +15,7 @@ import datatypes.DoubleData;
 import eventsystem.EventGenerator;
 
 public class Plotter extends DataProcessor {
+
     private XYSeries series = new XYSeries("series");;
 
     private int xValue = 0;
@@ -62,6 +63,7 @@ public class Plotter extends DataProcessor {
             series.delete(0, remove);
         } 
         series.fireSeriesChanged();
+
 
         return null;
     }    

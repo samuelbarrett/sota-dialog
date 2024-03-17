@@ -3,9 +3,12 @@ import java.io.File;
 import dataprocessors.CSVWriter;
 import dataprocessors.Convolve;
 import dataprocessors.Log10;
+import dataprocessors.Logger;
+import dataprocessors.MultiPlotter;
 import dataprocessors.Plotter;
 import dataprocessors.RMS;
-import dataprocessors.SilenceDetectorTest;
+import dataprocessors.SilenceDetector;
+import dataprocessors.SotaOutputController;
 import dataprocessors.GaussianSmooth;
 import dataproviders.DataProvider;
 
@@ -20,31 +23,32 @@ public class Main {
         AbstractEventGenerator.setDispatcher(dispatcher);
        
         DataProvider provider = new MicAudioProvider(4000, 1024);
-        //DataProvider provider = new FileAudioProvider(new File("test.wav"), 1024);
-
+     
         RMS rms = new RMS(1000);
         provider.addListener(rms);
 
         Log10 log = new Log10();
         rms.addListener(log);
 
-        GaussianSmooth s = new GaussianSmooth(1, 4000);
-        log.addListener(s);
+        GaussianSmooth g = new GaussianSmooth(1, 4000);
+        log.addListener(g);
 
         Convolve c = new Convolve(new double[]{-1, -1, 1, 1});
-        s.addListener(c);
+        g.addListener(c);
 
-        c.addListener(new SilenceDetectorTest());
+        SilenceDetector s = new SilenceDetector(8000, 8000, 0.002);
+        c.addListener(s);
 
-        // provider.addListener(new CSVWriter("./samples.csv"));
-        // rms.addListener(new CSVWriter("./rms.csv"));
-        // log.addListener(new CSVWriter("./log.csv"));
-        // s.addListener(new CSVWriter("./smoothed.csv"));
-        // c.addListener(new CSVWriter("./derivative.csv"));
+        s.addListener(new SotaOutputController());
 
-        //provider.addListener(new Plotter("samples", 0, 25000, -32000, 32000));
-        //s.addListener(new Plotter("smoothed rms", 0, 25000, 0, 8.0));
-        c.addListener(new Plotter("derivative", 0, 25000, -0.006, 0.006));
+
+
+
+
+        // MultiPlotter m = new MultiPlotter();
+        // provider.addListener(m);
+        // rms.addListener(m);
+        // log.addListener(m);
 
         provider.start();
         dispatcher.run();

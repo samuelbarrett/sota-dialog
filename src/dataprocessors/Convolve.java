@@ -18,7 +18,6 @@ public class Convolve extends DataProcessor {
 
     @Override
     protected Data process(Data input, EventGenerator sender) {
-        System.out.println(sender.getClass());
         DoubleData doubleInput = (DoubleData)input; 
         double[] data = doubleInput.data;
         
