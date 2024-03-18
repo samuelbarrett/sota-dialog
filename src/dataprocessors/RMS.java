@@ -7,7 +7,7 @@ import eventsystem.EventGenerator;
 public class RMS extends DataProcessor {
 
     private double[] buffer;
-    private int bufferIndex = 0;
+    private int buffIndex = 0;
 
     public RMS(int windowSize) {
         this.buffer = new double[windowSize];
@@ -21,9 +21,9 @@ public class RMS extends DataProcessor {
         double[] output = new double[data.length];
 
         for(int i = 0; i < data.length; i++) {
-            buffer[bufferIndex] = data[i];
+            buffer[buffIndex] = data[i];
             output[i] = rms();
-            bufferIndex = (bufferIndex + 1) % buffer.length;
+            buffIndex = (buffIndex + 1) % buffer.length;
         }
 
         return new DoubleData(output);

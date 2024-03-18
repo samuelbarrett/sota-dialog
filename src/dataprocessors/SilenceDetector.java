@@ -21,17 +21,17 @@ public class SilenceDetector extends DataProcessor {
 
     private Status state = Status.STARTUP;
 
-    private double rmsThreshold;
+    private double threshold;
     private int pauseLength;
     private int startupLength;
 
     private int count = 0;
     private int pauseStart = 0;
 
-    public SilenceDetector(int pauseLength, int startupLength, double rmsThreshold) {
+    public SilenceDetector(int pauseLength, int startupLength, double threshold) {
         this.pauseLength = pauseLength;
         this.startupLength = startupLength;
-        this.rmsThreshold = rmsThreshold;
+        this.threshold = threshold;
     }
 
     @Override
@@ -42,9 +42,9 @@ public class SilenceDetector extends DataProcessor {
         for(int i = 0; i < data.length; i++) {
             if(this.state == Status.STARTUP && this.count > this.startupLength) {
                 this.state = Status.STOPPED;
-            } else if((this.state == Status.STOPPED || this.state == Status.PAUSED) && data[i] > this.rmsThreshold) {
+            } else if((this.state == Status.STOPPED || this.state == Status.PAUSED) && data[i] > this.threshold) {
                 this.state = Status.TALKING;
-            } else if(this.state == Status.TALKING && data[i] < -this.rmsThreshold) {
+            } else if(this.state == Status.TALKING && data[i] < -this.threshold) {
                 this.state = Status.PAUSED;
                 this.pauseStart = count;
             } else if(this.state == Status.PAUSED && count - pauseStart > pauseLength) {

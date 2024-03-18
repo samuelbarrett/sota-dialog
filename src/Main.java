@@ -1,5 +1,6 @@
 import java.io.File;
 
+
 import dataprocessors.CSVWriter;
 import dataprocessors.Convolve;
 import dataprocessors.Log10;
@@ -36,19 +37,10 @@ public class Main {
         Convolve c = new Convolve(new double[]{-1, -1, 1, 1});
         g.addListener(c);
 
-        SilenceDetector s = new SilenceDetector(8000, 8000, 0.002);
+        SilenceDetector s = new SilenceDetector(8000, 1800, 0.0003);
         c.addListener(s);
 
         s.addListener(new SotaOutputController());
-
-
-
-
-
-        // MultiPlotter m = new MultiPlotter();
-        // provider.addListener(m);
-        // rms.addListener(m);
-        // log.addListener(m);
 
         provider.start();
         dispatcher.run();
