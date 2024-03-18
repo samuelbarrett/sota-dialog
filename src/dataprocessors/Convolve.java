@@ -37,7 +37,8 @@ public class Convolve extends DataProcessor {
         double sum = 0;
         for(int i = 0; i < kernel.length; i++) {
             sum += this.kernel[i]*this.buffer[index];
-            index = (index+1)%buffer.length;
+            //conditional instead of mod for performance
+            index = (index == buffer.length-1) ? 0 : index+1;
         }
         return sum;
     }   
