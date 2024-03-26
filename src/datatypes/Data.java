@@ -1,3 +1,4 @@
 package datatypes;
+import java.io.Serializable;
 
-public interface Data {}
+public abstract class Data implements Serializable {};

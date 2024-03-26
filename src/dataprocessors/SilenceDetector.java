@@ -7,7 +7,7 @@ public class SilenceDetector extends DataProcessor {
 
     public enum Status {STARTUP, STOPPED, TALKING, PAUSED}
 
-    public class SilenceStatusData implements Data {
+    public class SilenceStatusData extends Data {
         public final Status data;
         
         public SilenceStatusData(Status s) {
