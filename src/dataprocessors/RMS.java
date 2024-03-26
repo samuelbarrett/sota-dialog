@@ -1,7 +1,10 @@
 package dataprocessors;
 
+import java.util.Arrays;
+
 import datatypes.Data;
 import datatypes.DoubleData;
+import datatypes.ShortData;
 import eventsystem.EventGenerator;
 
 public class RMS extends DataProcessor {
@@ -16,8 +19,15 @@ public class RMS extends DataProcessor {
     @Override
     protected Data process(Data input, EventGenerator sender) {
 
-        DoubleData doubleInput = (DoubleData)input; 
-        double[] data = doubleInput.data;
+        double[] data;
+        if(input instanceof ShortData) {
+            ShortData shortInput = (ShortData)input;
+            data = shortInput.asDoubleArray();
+        } else {
+            DoubleData doubleInput = (DoubleData)input; 
+            data = doubleInput.data;
+        }
+
         double[] output = new double[data.length];
 
         for(int i = 0; i < data.length; i++) {
