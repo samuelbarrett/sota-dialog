@@ -1,4 +1,4 @@
-package dataprocessors;
+package dataprocessors.plotters;
 
 import java.util.HashMap;
 
@@ -12,6 +12,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import dataprocessors.DataProcessor;
 import datatypes.Data;
 import datatypes.DoubleData;
 import eventsystem.EventGenerator;

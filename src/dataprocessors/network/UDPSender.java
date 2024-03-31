@@ -1,4 +1,4 @@
-package dataprocessors;
+package dataprocessors.network;
 
 import java.io.ByteArrayOutputStream;
 
@@ -9,8 +9,9 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import dataprocessors.DataProcessor;
 import datatypes.Data;
-import datatypes.Message;
+import datatypes.UDPMessage;
 import eventsystem.EventGenerator;
 
 public class UDPSender extends DataProcessor {
@@ -22,15 +23,14 @@ public class UDPSender extends DataProcessor {
     private DatagramSocket socket;
 
     private int seq = 0;
-    private boolean initialized = false;
 
     public UDPSender(String ip, int port) {
-        this.port = port;
         this.ip = ip;
+        this.port = port;
     }
 
     private void init() throws SocketException, UnknownHostException {
-        if(initialized == false) { 
+        if(this.socket == null) { 
             socket = new DatagramSocket();
             address = InetAddress.getByName(ip);
         }
@@ -44,7 +44,7 @@ public class UDPSender extends DataProcessor {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
     
-            oos.writeObject(new Message(seq, input));
+            oos.writeObject(new UDPMessage(seq, input));
             oos.flush();
 
             byte[] serialized = baos.toByteArray();

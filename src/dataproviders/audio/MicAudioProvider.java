@@ -1,4 +1,4 @@
-package dataproviders;
+package dataproviders.audio;
 import java.nio.ByteBuffer;
 
 import javax.sound.sampled.AudioFormat;
@@ -7,6 +7,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.TargetDataLine;
 
+import dataproviders.DataProvider;
 import datatypes.ShortData;
 
 public class MicAudioProvider extends DataProvider {

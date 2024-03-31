@@ -1,4 +1,4 @@
-package dataprocessors;
+package dataprocessors.plotters;
 
 import javax.swing.JFrame;
 
@@ -10,6 +10,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import dataprocessors.DataProcessor;
 import datatypes.Data;
 import datatypes.DoubleData;
 import eventsystem.EventGenerator;

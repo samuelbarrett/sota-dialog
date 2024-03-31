@@ -1,10 +1,11 @@
-package dataprocessors;
+package dataprocessors.loggers;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import dataprocessors.DataProcessor;
 import datatypes.Data;
 import datatypes.DoubleData;
 import eventsystem.EventGenerator;

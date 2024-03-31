@@ -1,9 +1,11 @@
-package dataproviders;
+package dataproviders.network;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import datatypes.Message;
+
+import dataproviders.DataProvider;
+import datatypes.UDPMessage;
 
 public class UDPReceiver extends DataProvider {
 
@@ -29,7 +31,7 @@ public class UDPReceiver extends DataProvider {
                 socket.receive(packet);
 
                 ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(packet.getData()));
-                Message m = (Message)inputStream.readObject();
+                UDPMessage m = (UDPMessage)inputStream.readObject();
                 
                 //ignore out-of-order messages
                 if(m.sequenceNumber > prevMessage) {

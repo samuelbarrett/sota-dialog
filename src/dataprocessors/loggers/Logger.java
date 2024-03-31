@@ -1,4 +1,5 @@
-package dataprocessors;
+package dataprocessors.loggers;
+import dataprocessors.DataProcessor;
 import datatypes.Data;
 import eventsystem.EventGenerator;
 

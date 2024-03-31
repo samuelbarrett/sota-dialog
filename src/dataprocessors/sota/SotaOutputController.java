@@ -1,5 +1,7 @@
-package dataprocessors;
+package dataprocessors.sota;
 
+import dataprocessors.DataProcessor;
+import dataprocessors.SilenceDetector;
 import dataprocessors.SilenceDetector.SilenceStatusData;
 import dataprocessors.SilenceDetector.Status;
 import datatypes.Data;

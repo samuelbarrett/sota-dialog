@@ -1,4 +1,4 @@
-package dataproviders;
+package dataproviders.audio;
 
 import java.io.File;
 import java.nio.ByteBuffer;
@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
+import dataproviders.DataProvider;
 import datatypes.DoubleData;
 
 public class FileAudioProvider extends DataProvider   {

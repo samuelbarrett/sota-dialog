@@ -1,4 +1,6 @@
 package dataprocessors;
+import java.io.Serializable;
+
 import datatypes.Data;
 import datatypes.DoubleData;
 import eventsystem.EventGenerator;
@@ -7,7 +9,10 @@ public class SilenceDetector extends DataProcessor {
 
     public enum Status {STARTUP, STOPPED, TALKING, PAUSED}
 
-    public class SilenceStatusData extends Data {
+    public static class SilenceStatusData extends Data {
+
+        private static final long serialVersionUID = 1L;
+
         public final Status data;
         
         public SilenceStatusData(Status s) {
