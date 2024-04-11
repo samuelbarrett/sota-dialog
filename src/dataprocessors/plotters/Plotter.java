@@ -15,7 +15,7 @@ import datatypes.Data;
 import datatypes.DoubleData;
 import eventsystem.EventGenerator;
 
-public class Plotter extends DataProcessor {
+public class Plotter extends DataProcessor implements Runnable {
 
     private XYSeries series = new XYSeries("series");;
 
@@ -68,4 +68,11 @@ public class Plotter extends DataProcessor {
 
         return null;
     }    
+
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'run'");
+    }   
 }

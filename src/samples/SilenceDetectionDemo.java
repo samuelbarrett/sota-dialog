@@ -1,18 +1,14 @@
 package samples;
 
-import org.jfree.util.Log;
-
 import dataprocessors.Convolve;
 import dataprocessors.GaussianSmooth;
 import dataprocessors.Log10;
 import dataprocessors.RMS;
 import dataprocessors.SilenceDetector;
 import dataprocessors.loggers.Logger;
-import dataprocessors.plotters.MultiPlotter;
-import dataprocessors.plotters.Plotter;
 import dataproviders.DataProvider;
 import dataproviders.audio.MicAudioProvider;
-import eventsystem.AbstractEventGenerator;
+
 import eventsystem.EventDispatcher;
 
 public class SilenceDetectionDemo {

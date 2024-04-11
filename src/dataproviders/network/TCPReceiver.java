@@ -6,14 +6,11 @@ import java.net.Socket;
 
 import dataproviders.DataProvider;
 import datatypes.Data;
-import datatypes.ShortData;
-import datatypes.UDPMessage;
 
 public class TCPReceiver extends DataProvider {
 
     private int port;
-    private int bufferSize;
-  
+
     public TCPReceiver(int port) {
        this.port = port;
     } 
@@ -23,11 +20,11 @@ public class TCPReceiver extends DataProvider {
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             
-            System.out.println("TCP Provider listening on port " + port);
+            System.out.println("TCP Provider listening on port: " + port);
 
             Socket clientSocket = serverSocket.accept();
 
-            System.out.println("TCP Sender connected.");
+            System.out.println("TCP Sender connected");
 
             ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
 

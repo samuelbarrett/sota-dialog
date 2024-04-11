@@ -9,7 +9,7 @@ import javax.sound.sampled.AudioSystem;
 import dataproviders.DataProvider;
 import datatypes.DoubleData;
 
-public class FileAudioProvider extends DataProvider   {
+public class FileAudioProvider extends DataProvider {
    
     private File audioFile;
     private int bufferSize;

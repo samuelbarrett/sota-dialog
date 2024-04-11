@@ -1,5 +1,4 @@
 package dataprocessors;
-import java.io.Serializable;
 
 import datatypes.Data;
 import datatypes.DoubleData;

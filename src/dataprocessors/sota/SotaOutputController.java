@@ -27,6 +27,7 @@ public class SotaOutputController extends DataProcessor {
         mem.Connect();
         this.motion.InitRobot_Sota();
         this.motion.ServoOn();
+        this.updateStatus(Status.STARTUP);
     }
     
     @Override

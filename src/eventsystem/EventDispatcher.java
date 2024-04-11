@@ -4,7 +4,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class EventDispatcher {
    
+
     private BlockingQueue<Event> eventQueue = new LinkedBlockingQueue<Event>();
+
+    public EventDispatcher() {
+        AbstractEventGenerator.setDispatcher(this);
+    }
 
     public void scheduleEvent(Event event) {
         eventQueue.add(event);
