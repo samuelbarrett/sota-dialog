@@ -4,6 +4,7 @@ import datatypes.Data;
 import datatypes.DoubleData;
 import eventsystem.EventGenerator;
 
+//Checks the derivative thresholds for Lorena's algorithm
 public class SilenceDetector extends DataProcessor {
 
     public enum Status {STARTUP, STOPPED, TALKING, PAUSED}
