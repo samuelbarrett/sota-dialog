@@ -21,14 +21,11 @@ public class Main {
     public static void main(String[] args) {
         
         EventDispatcher dispatcher = new EventDispatcher();
-        AbstractEventGenerator.setDispatcher(dispatcher);
        
-        DataProvider provider = new UDPReceiver(5000, 2048);
-     
+        DataProvider provider = new UDPReceiver(5000, 6000);
+
         RMS rms = new RMS(1000);
         provider.addListener(rms);
-
-        rms.addListener(new Plotter("RMS", 0, 50000, -20000, 20000));
 
         Log10 log = new Log10();
         rms.addListener(log);
@@ -42,7 +39,7 @@ public class Main {
         SilenceDetector s = new SilenceDetector(8000, 1800, 0.0003);
         c.addListener(s);
 
-        s.addListener(new UDPSender("140.193.124.247", 5001));
+        s.addListener(new UDPSender("140.193.121.14", 5001));
      
         provider.start();
         dispatcher.run();

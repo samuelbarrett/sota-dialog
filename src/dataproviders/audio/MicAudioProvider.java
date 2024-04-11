@@ -8,7 +8,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.TargetDataLine;
 
 import dataproviders.DataProvider;
-import datatypes.ShortData;
+import datatypes.DoubleData;
 
 public class MicAudioProvider extends DataProvider {
     private int sampleRate;
@@ -17,6 +17,7 @@ public class MicAudioProvider extends DataProvider {
     public MicAudioProvider(int sampleRate, int bufferSize) {
         this.sampleRate = sampleRate;
         this.bufferSize = bufferSize;
+        
     } 
 
     @Override
@@ -31,16 +32,16 @@ public class MicAudioProvider extends DataProvider {
             dataline.start();
     
             byte[] buffer = new byte[this.bufferSize];
-            short[] samples = new short[this.bufferSize / 2];
+            double[] samples = new double[this.bufferSize / 2];
 
             ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
 
             while(audioStream.read(buffer) >= 0) {
                 byteBuffer.position(0);
                 for(int i = 0; i < this.bufferSize/2; i++) {
-                   samples[i] = byteBuffer.getShort();
+                   samples[i] = (double)byteBuffer.getShort();
                 }
-                this.notifyListeners(new ShortData(samples));
+                this.notifyListeners(new DoubleData(samples));
             }
         } catch (Exception e) {
             e.printStackTrace();
