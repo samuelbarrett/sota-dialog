@@ -37,9 +37,7 @@ public class UDPReceiver extends DataProvider {
                 if(m.sequenceNumber > prevMessage) {
                     prevMessage = m.sequenceNumber;
                     this.notifyListeners(m.data);
-                } else {
-                    System.out.println("dropped");
-                }
+                } 
             }
         } catch (Exception e) {
             e.printStackTrace();

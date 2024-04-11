@@ -1,7 +1,6 @@
 package samples;
 
 import dataprocessors.Convolve;
-import dataprocessors.Derivative;
 import dataprocessors.GaussianSmooth;
 import dataprocessors.Log10;
 import dataprocessors.RMS;
@@ -11,6 +10,7 @@ import dataproviders.DataProvider;
 import dataproviders.audio.MicAudioProvider;
 import eventsystem.EventDispatcher;
 
+//demo of lorena's algorithm for sota 
 public class SotaDemo {
     public static void main(String [] args) {
         EventDispatcher dispatcher = new EventDispatcher();
@@ -26,11 +26,11 @@ public class SotaDemo {
         GaussianSmooth g = new GaussianSmooth(1, 4000);
         log.addListener(g);
 
-        Derivative d = new Derivative();
-        g.addListener(d);
+        Convolve c = new Convolve(new double[]{-1, -1, 1, 1});
+        g.addListener(c);
 
         SilenceDetector s = new SilenceDetector(8000, 8000, 0.0003);
-        d.addListener(s);
+        c.addListener(s);
 
         s.addListener(new SotaOutputController());
 

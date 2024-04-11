@@ -11,6 +11,7 @@ import dataproviders.audio.MicAudioProvider;
 
 import eventsystem.EventDispatcher;
 
+//demo of lorena's algorithm that prints output
 public class SilenceDetectionDemo {
 
     public static void main(String[] args) {

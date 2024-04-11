@@ -12,6 +12,7 @@ import jp.vstone.RobotLib.CRobotPose;
 
 import java.awt.Color;
 
+//change sota eye color based on talking status
 public class SotaOutputController extends DataProcessor {
 
     private CRobotPose pose;

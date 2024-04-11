@@ -4,10 +4,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class EventDispatcher {
    
-
     private BlockingQueue<Event> eventQueue = new LinkedBlockingQueue<Event>();
 
     public EventDispatcher() {
+        //Set dispatcher for all EventGenerators. This is done to avoid passing the dispatcher to every processor.
+        //note that this means we can only have 1 instance of EventDisaptcher globally
         AbstractEventGenerator.setDispatcher(this);
     }
 
