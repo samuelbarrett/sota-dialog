@@ -7,11 +7,15 @@
 # BlueJ files
 *.ctxt
 
+# VS Code workspaces
+.vscode/
+*.code-workspace
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
 # Package Files #
-#*.jar
+*.jar
 *.war
 *.nar
 *.ear
@@ -33,5 +37,4 @@ replay_pid*
 .vscode/
 
 # sota build
-build.xml
 rt.jar
