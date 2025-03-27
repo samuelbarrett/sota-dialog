@@ -38,7 +38,7 @@ public class DialogServer {
         c.addListener(s);
 
         //return processed data
-        UDPSender sender = new UDPSender("10.0.0.252", 8888);
+        UDPSender sender = new UDPSender("10.127.46.9", 8888);
         s.addListener(sender);
         
         receiver.start();
