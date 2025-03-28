@@ -20,15 +20,13 @@ public class SotaDialog {
 
         // send microphone data to the server
         DataProvider mic = new MicAudioProvider(4000, 1024);
-        UDPSender audioSender = new UDPSender("140.193.221.236", 7777);
+        UDPSender audioSender = new UDPSender("10.0.0.82", 7777);
         mic.addListener(audioSender);
 
         // handle incoming commands from the server, and sending state updates to server
         DataProvider receiver = new UDPReceiver(8888, 6000);
         SotaDialogController controller = new SotaDialogController();
-        //UDPSender stateSender = new UDPSender("140.193.221.236", 7778);
         receiver.addListener(controller);
-        //controller.addListener(stateSender);
 
         mic.start();
         receiver.start();

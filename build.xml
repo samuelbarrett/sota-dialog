@@ -8,6 +8,7 @@
         <!-- <property name="scp.server" value="10.0.0.252"/>   -->
         <!-- <property name="scp.server" value="10.127.37.190"/>    -->
         <!--- For Sota 17 -->
+        <property name="scp.server" value="10.0.0.178"/>
         <property name="scp.server" value="10.127.46.9"/>
          
         <!--scp credentials -->
