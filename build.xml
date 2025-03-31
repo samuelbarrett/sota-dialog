@@ -9,7 +9,7 @@
         <!-- <property name="scp.server" value="10.127.37.190"/>    -->
         <!--- For Sota 17 -->
         <property name="scp.server" value="10.0.0.178"/>
-        <property name="scp.server" value="10.127.46.9"/>
+        <!-- <property name="scp.server" value="10.127.46.9"/> -->
          
         <!--scp credentials -->
         <property name="scp.edison.user" value="root"  />
@@ -70,6 +70,22 @@
                         </manifest>
                 </jar>
         </target>
+
+        <!-- Special build target for the serverside (laptop) program, to account for its dependencies -->
+        <target name="__make_jar_dialogserver">  <!-- internal use -->
+                <!-- <manifestclasspath property="dialogserver.manifest.classpath" jarfile="DialogServer.jar">
+                        <classpath>
+                                <fileset dir="lib" includes="*.jar" />
+                        </classpath>
+                </manifestclasspath> -->
+                <jar jarfile="${jars.dir}/DialogServer.jar" basedir="${bin.dir}">
+                        <manifest>
+                                <attribute name="Class-Path" value="${build.lib}"/>
+                                <attribute name="Main-Class" value="${jar.class}"/>
+                        </manifest>
+                </jar>
+        </target>
+
         <target name="make_jars" depends="compile">
                 <antcall target="__make_jar">
                         <param name="jar.class" value="Main" />
@@ -95,7 +111,7 @@
                         <param name="jar.class" value="dialog.SotaDialog" />
                         <param name="jar.name" value="SotaDialog.jar" />
                 </antcall>
-                <antcall target="__make_jar">
+                <antcall target="__make_jar_dialogserver">
                         <param name="jar.class" value="dialog.DialogServer" />
                         <param name="jar.name" value="DialogServer.jar" />
                 </antcall>
