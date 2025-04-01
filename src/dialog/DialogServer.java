@@ -18,6 +18,10 @@ import eventsystem.EventDispatcher;
 public class DialogServer {
 
     public static void main(String[] args) {
+        ToolkitAPI api = new ToolkitAPI();
+
+        //ToolkitAPI api = new ToolkitAPI();
+        System.out.println("API started and we've moved on");
 
         EventDispatcher dispatcher = new EventDispatcher();
      
