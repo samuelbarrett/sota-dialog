@@ -36,6 +36,9 @@
                 <fileset dir="${lib.dir}" includes="*.jar" />
         </path>
 
+        
+
+
         <!-- Targets -->
         <target name="clean">
                 <delete dir="${bin.dir}"/>
@@ -78,9 +81,18 @@
                                 <fileset dir="lib" includes="*.jar" />
                         </classpath>
                 </manifestclasspath> -->
+                <!-- Runnable classpath for the DialogServer -->
+                <path id="dialogserver.classpath">
+                        <fileset dir="${lib.dir}"> 
+                                <include name="*.jar" />
+                        </fileset>
+                </path>
+                <manifestclasspath property="dialogserver.manifest.classpath" jarfile="${jars.dir}/DialogServer.jar">
+                        <classpath refid="dialogserver.classpath"/>
+                </manifestclasspath>
                 <jar jarfile="${jars.dir}/DialogServer.jar" basedir="${bin.dir}">
                         <manifest>
-                                <attribute name="Class-Path" value="${build.lib}"/>
+                                <attribute name="Class-Path" value="${dialogserver.manifest.classpath}"/>
                                 <attribute name="Main-Class" value="${jar.class}"/>
                         </manifest>
                 </jar>
