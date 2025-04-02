@@ -16,7 +16,7 @@
         <property name="scp.edison.pass" value="edison00" />
 
         <!--target folders -->
-        <property name="sota.basedir" value="/home/root/sota-backchanneling" />
+        <property name="sota.basedir" value="/home/root/backchanneling" />
 
         <!--dir structure -->
         <property name="src.dir" value="src"/>
@@ -30,7 +30,7 @@
 
         <!--runnable classpath. Update if you need new libraries -->
         <property name="jar.classpath"
-        	value=". /home/vstone/lib/sotalib.jar /home/vstone/lib/SRClientHelper.jar /home/vstone/lib/core-2.2.jar /home/vstone/lib/javase-2.2.jar  /home/vstone/lib/jna-4.1.0.jar /home/vstone/lib/gson-2.6.1.jar /usr/local/share/OpenCV/java/opencv-310.jar"/>
+        	value=". /home/vstone/lib/commons-math3-3.6.1.jar /home/vstone/lib/sotalib.jar /home/vstone/lib/SRClientHelper.jar /home/vstone/lib/core-2.2.jar /home/vstone/lib/javase-2.2.jar  /home/vstone/lib/jna-4.1.0.jar /home/vstone/lib/gson-2.6.1.jar /usr/local/share/OpenCV/java/opencv-310.jar"/>
 
         <path id="build.lib">   <!-- include all jars in the listed lib dir into our classpath-->
                 <fileset dir="${lib.dir}" includes="*.jar" />
@@ -126,6 +126,10 @@
                 <antcall target="__make_jar_dialogserver">
                         <param name="jar.class" value="dialog.DialogServer" />
                         <param name="jar.name" value="DialogServer.jar" />
+                </antcall>
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="tools.AS3_1" />
+                        <param name="jar.name" value="AS3_1.jar" />
                 </antcall>
         </target>
 

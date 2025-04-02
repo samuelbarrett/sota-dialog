@@ -5,6 +5,8 @@ import dataprocessors.SilenceDetector.SilenceStatusData;
 import dataprocessors.SilenceDetector.Status;
 import datatypes.Data;
 import eventsystem.EventGenerator;
+import tools.ServoRangeTool;
+
 import jp.vstone.RobotLib.*;
 
 import java.awt.Color;
@@ -19,7 +21,7 @@ public class SotaDialogController extends DataProcessor {
      * LISTENING - the robot is listening for the user's speech
      * SPEAKING - the robot is speaking
      */
-    public enum SotaState { LISTENING, SPEAKING }
+    public enum SotaState { LISTENING, BACKCHANNELING }
     public static class SotaStateData extends Data {
         private static final long serialVersionUID = 1L;
         public final SotaState data;
@@ -45,6 +47,22 @@ public class SotaDialogController extends DataProcessor {
     private boolean backchannelled;
     private static final long MIN_BACKCHANNEL_INTERVAL_MS = 1000; // minimum time between backchannels
 
+    // robot motor poses
+    private CRobotPose nodNeutral = null;
+    private CRobotPose nodDown = null;
+    private CRobotPose nodUp = null;
+
+    Byte[] servoIDs = new Byte[] {
+        Byte.valueOf(CSotaMotion.SV_BODY_Y),
+        Byte.valueOf(CSotaMotion.SV_L_SHOULDER),
+        Byte.valueOf(CSotaMotion.SV_L_ELBOW),
+        Byte.valueOf(CSotaMotion.SV_R_SHOULDER),
+        Byte.valueOf(CSotaMotion.SV_R_ELBOW),
+        Byte.valueOf(CSotaMotion.SV_HEAD_Y),
+        Byte.valueOf(CSotaMotion.SV_HEAD_P),
+        Byte.valueOf(CSotaMotion.SV_HEAD_R),
+    };
+
     public SotaDialogController() {
         this.mem = new CRobotMem();
 		this.motion = new CSotaMotion(mem);
@@ -56,6 +74,7 @@ public class SotaDialogController extends DataProcessor {
         mem.Connect();
         this.motion.InitRobot_Sota();
         this.motion.ServoOn();
+        this.initNodPoses();
         this.update(Status.STARTUP);
     }
     
@@ -67,7 +86,7 @@ public class SotaDialogController extends DataProcessor {
 
     public SotaStateData update(Status status) {
         // manage internal Sota state
-        if (this.state == SotaState.SPEAKING) {
+        if (this.state == SotaState.BACKCHANNELING) {
             long current_time_ms = System.currentTimeMillis();
             if (current_time_ms > this.backchannel_finish_time_ms) {
                 this.state = SotaState.LISTENING;
@@ -91,6 +110,7 @@ public class SotaDialogController extends DataProcessor {
                 pose.setLED_Sota(Color.YELLOW, Color.YELLOW, 0, Color.YELLOW);
                 if (!this.backchannelled) {
                     playVerbalBackchannel(MIN_BACKCHANNEL_INTERVAL_MS);
+                    playNod(MIN_BACKCHANNEL_INTERVAL_MS);
                 }
             } else if (status == Status.STOPPED) {
                 pose.setLED_Sota(Color.RED, Color.RED, 0, Color.RED);
@@ -106,6 +126,48 @@ public class SotaDialogController extends DataProcessor {
         CPlayWave.PlayWave("../resources/minecraft-villager-complete-trade.wav");
         this.backchannel_finish_time_ms = current_time_ms + play_time + min_backchannel_interval_ms;
         this.backchannelled = true;
-        this.state = SotaState.SPEAKING;
+        this.state = SotaState.BACKCHANNELING;
+    }
+
+    // Adjust head pitch to make Sota nod using the nod poses
+    private void playNod(long min_backchannel_interval_ms) {
+        long play_time = 1000;
+        this.backchannel_finish_time_ms = System.currentTimeMillis() + play_time + min_backchannel_interval_ms;
+        this.backchannelled = true;
+        this.state = SotaState.BACKCHANNELING;
+
+        this.motion.play(nodDown, 200);
+        this.motion.waitEndinterpAll();
+
+        // this.motion.play(nodUp, 400);
+        // this.motion.waitEndinterpAll();
+
+        this.motion.play(nodNeutral, 250);
+        this.motion.waitEndinterpAll();
+    }
+
+    /**
+     * Initializes the motor poses for head nodding (head pitch motor positions).
+     * Ensure the robot starts in a neutral position with its head facing forward.
+     */
+    private void initNodPoses() {
+        ServoRangeTool ranges = ServoRangeTool.Load("../resources/servo/head_nod_motor_positions");
+        CRobotPose minPose = ranges.getMinPose();
+        CRobotPose maxPose = ranges.getMaxPose();
+        CRobotPose midPose = ranges.getMidPose();
+
+        this.nodNeutral = this.motion.getReadPose();
+        this.nodDown = this.motion.getReadPose();
+        this.nodUp = this.motion.getReadPose();
+        
+        // extract just the head pitch motor position from saved ServoRangeTool obj
+        // and don't change the rest of the pose
+        Short minHeadPitch = minPose.getServoAngle(Byte.valueOf(CSotaMotion.SV_HEAD_P));
+        Short maxHeadPitch = maxPose.getServoAngle(Byte.valueOf(CSotaMotion.SV_HEAD_P));
+        Short midHeadPitch = midPose.getServoAngle(Byte.valueOf(CSotaMotion.SV_HEAD_P));
+
+        this.nodUp.addServoAngle(Byte.valueOf(CSotaMotion.SV_HEAD_P), minHeadPitch);
+        this.nodNeutral.addServoAngle(Byte.valueOf(CSotaMotion.SV_HEAD_P), midHeadPitch);
+        this.nodDown.addServoAngle(Byte.valueOf(CSotaMotion.SV_HEAD_P), maxHeadPitch);
     }
 }
