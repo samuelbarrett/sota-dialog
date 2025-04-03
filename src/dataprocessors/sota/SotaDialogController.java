@@ -141,13 +141,13 @@ public class SotaDialogController extends DataProcessor {
         this.backchannelled = true;
         this.state = SotaState.BACKCHANNELING;
         
-        this.motion.play(nodDown, 200);
+        this.motion.play(nodDown, 275);
         this.motion.waitEndinterpAll();
         
         // this.motion.play(nodUp, 400);
         // this.motion.waitEndinterpAll();
         
-        this.motion.play(nodNeutral, 250);
+        this.motion.play(nodNeutral, 400);
         this.motion.waitEndinterpAll();
     }
     
