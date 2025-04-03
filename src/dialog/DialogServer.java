@@ -18,10 +18,9 @@ import eventsystem.EventDispatcher;
 public class DialogServer {
 
     public static void main(String[] args) {
-        ToolkitAPI api = new ToolkitAPI();
-
-        //ToolkitAPI api = new ToolkitAPI();
-        System.out.println("API started and we've moved on");
+        DialogStateModel stateModel = new DialogStateModel();
+        // start the REST API server
+        ToolkitAPI api = new ToolkitAPI(stateModel);
 
         EventDispatcher dispatcher = new EventDispatcher();
      
@@ -45,7 +44,7 @@ public class DialogServer {
         // --Lorena's algorithm
         
         // handle updating the dialog state according to Lorena's algorithm and Sota state
-        DialogManager manager = new DialogManager();
+        DialogManager manager = new DialogManager(stateModel);
         s.addListener(manager);
         UDPSender sender = new UDPSender("10.0.0.178", 8888);
         manager.addListener(sender);

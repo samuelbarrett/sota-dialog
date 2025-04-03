@@ -3,6 +3,7 @@ package dataprocessors.dialog;
 import dataprocessors.DataProcessor;
 import dataprocessors.SilenceDetector.SilenceStatusData;
 import datatypes.Data;
+import dialog.DialogStateModel;
 import eventsystem.EventGenerator;
 
 /**
@@ -12,11 +13,16 @@ import eventsystem.EventGenerator;
  */
 public class DialogManager extends DataProcessor {
 
-    public DialogManager() {}
+    DialogStateModel stateModel;
+
+    public DialogManager(DialogStateModel stateModel) {
+        this.stateModel = stateModel;
+    }
 
     @Override
     protected Data process(Data input, EventGenerator sender) {
         SilenceStatusData silenceStatus = (SilenceStatusData) input;
-        return silenceStatus;
+        this.stateModel.setSilenceState(silenceStatus);
+        return this.stateModel.getState();
     }
 }
